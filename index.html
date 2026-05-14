@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Fake News Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span class="icon">📰</span>
+        <h1>Fake News Detection System</h1>
+        <p class="subtitle">Powered by Machine Learning &amp; NLP</p>
+    </div>
+
+    <div class="card">
+        <form method="POST" action="/">
+            <label for="message">Enter News Text:</label>
+            <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Type or paste the news headline / article here..."
+            >{{ user_input }}</textarea>
+            <button type="submit">🔍 Check News</button>
+        </form>
+
+        {% if result %}
+        <div class="result {{ style }}">
+            {% if style == 'danger' %}
+                <span class="badge">⚠️ {{ result }}</span>
+            {% else %}
+                <span class="badge">✅ {{ result }}</span>
+            {% endif %}
+            <p class="method">Detection Method: <strong>{{ method }}</strong></p>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="examples">
+        <h3>Try Sample Inputs:</h3>
+        <div class="example-grid">
+            <div class="example-box real" onclick="fillText(this)">
+                📋 "Government announces new infrastructure budget for 2025"
+            </div>
+            <div class="example-box fake" onclick="fillText(this)">
+                📋 "SHOCKING! You have won 1 crore lottery click here now"
+            </div>
+            <div class="example-box real" onclick="fillText(this)">
+                📋 "Scientists discover new treatment for diabetes"
+            </div>
+            <div class="example-box fake" onclick="fillText(this)">
+                📋 "Drinking hot water cures cancer doctors dont want you to know"
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>IRTM Mini Project | G H Raisoni College of Engineering &amp; Management, Pune | 2025-26</p>
+    </div>
+</div>
+
+<script>
+function fillText(el) {
+    const raw = el.innerText.replace(/^📋\s*"?/, '').replace(/"$/, '');
+    document.getElementById('message').value = raw;
+}
+</script>
+
+</body>
+</html>
